@@ -21,21 +21,36 @@ namespace QueryBinaryTree
             empTree.Insert(new Employee { Id = 5, FirstName = "Tim", LastName = "Litton", Department = "Marketing" });
 
             Console.WriteLine("List of departments");
-            var depts = empTree.Select(d => d.Department).Distinct();
+            //var depts = empTree.Select(d => d.Department).Distinct();
+
+            var depts = from d in empTree
+                        group d by d.Department;
+
             foreach (var dept in depts)
             {
-                Console.WriteLine("Department: {0}", dept);
+                Console.WriteLine("Department: {0}", dept.Key);
             }
 
             Console.WriteLine("\nEmployees in the IT department");
-            var ITEmployees = empTree.Where(e => String.Equals(e.Department, "IT")).Select(emp => emp);
+            //var ITEmployees = empTree.Where(e => String.Equals(e.Department, "IT")).Select(emp => emp);
+
+            var ITEmployees = from e in empTree
+                              where String.Equals(e.Department, "IT")
+                              select e;
+
             foreach (var emp in ITEmployees)
             {
                 Console.WriteLine(emp);
             }
 
+
+
             Console.WriteLine("\nAll employees grouped by department");
-            var employeesByDept = empTree.GroupBy(e => e.Department);
+            //var employeesByDept = empTree.GroupBy(e => e.Department);
+
+            var employeesByDept = from e in empTree
+                                  group e by e.Department;
+
             foreach (var dept in employeesByDept)
             {
                 Console.WriteLine("Department: {0}", dept.Key);
@@ -44,6 +59,8 @@ namespace QueryBinaryTree
                     Console.WriteLine("\t{0} {1}", emp.FirstName, emp.LastName);
                 }
             }
+
+
 
         }
 
