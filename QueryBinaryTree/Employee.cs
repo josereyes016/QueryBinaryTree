@@ -17,6 +17,23 @@ namespace QueryBinaryTree
         {
             return String.Format("Id: {0}, Name: {1} {2}, Dept: {3}", this.Id, this.FirstName, this.LastName, this.Department);
         }
+
+        int IComparable<Employee>.CompareTo(Employee other)
+        {
+            if( other == null)
+            {
+                return 1;
+            }
+            else if( this.Id > other.Id)
+            {
+                return 1;
+            }
+            else if( this.Id < other.Id)
+            {
+                return -1;
+            }
+            return 0;
+        }
     }
 
 }
